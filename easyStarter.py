@@ -70,17 +70,15 @@ class App(QtWidgets.QMainWindow, form_class) :
         if os.path.isfile(lastfilename) :
             os.remove(lastfilename)
             print("sak jae")
-        os.system(f"mpiexec -np 4 python main.py --nstep {1000} --save_dir outputs --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} ")
+        os.system(f"mpiexec -np 4 python main_mpi.py --nstep {1000} --save_dir outputs --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} ")
 
         while True :
             filename = os.path.join("outputs", f"snapshot_t{1000-1:04d}.npy")
             if os.path.isfile(filename) :
                 break
 
-        
-
     def startSim(self) :
-        os.system(f"mpiexec -np 4 python main.py --tot_nstar {100000} --nstep {1000} --save_dir {save_dir} --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} --frame_number {self.frame_number}")
+        os.system(f"mpiexec -np 4 python main_mpi.py --tot_nstar {100000} --nstep {1000} --save_dir {save_dir} --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} --frame_number {self.frame_number}")
 
         while True :
             filename = os.path.join(save_dir, f"snapshot_t{self.frame_number:04d}.npy")
