@@ -12,10 +12,10 @@ In_theta1 = 0
 In_phi1 = 90
 In_theta2 = 0
 In_phi2 = 0
-In_tot_nstar = 100000
+In_tot_nstar = 10000
 In_mratio = 5
 In_peri = 5
-In_nstep = 1500
+In_nstep = 1000
 
 class Sim:
 
@@ -96,6 +96,10 @@ class Sim:
         dt = self.args.dt  # 시간 간격
         nstep = self.args.nstep  # 전체 시뮬레이션 단계
         
+        datas_gal1_starpos = []
+        datas_gal2_starpos = []
+        datas_gal1_starvel = []
+        datas_gal2_starvel = []
         #별들 위치 설정
         if rank == 0 :
             if self.args.seed_fix:
@@ -104,32 +108,35 @@ class Sim:
             else:   
                 self.galaxy1.initStars()
                 self.galaxy2.initStars()
-        else :
-            print()
 
-        # 별을 프로세스 수만큼 분할
-        total_stars_gal1 = self.galaxy1.starpos.shape[1]
-        total_stars_gal2 = self.galaxy2.starpos.shape[1]
 
-        #1개마다 얼마
-        part_stars_gal1 = total_stars_gal1 // size
-        part_stars_gal2 = total_stars_gal2 // size
+            # 별을 프로세스 수만큼 분할
+            total_stars_gal1 = self.galaxy1.starpos.shape[1]
+            total_stars_gal2 = self.galaxy2.starpos.shape[1]
+            for r in range(size) :
+                #1개마다 얼마
+                part_stars_gal1 = total_stars_gal1 // size
+                part_stars_gal2 = total_stars_gal2 // size
 
-        # 각 프로세스가 처리할 별의 범위 계산
-        start_gal1 = rank * part_stars_gal1 + rank
-        end_gal1 = start_gal1 + part_stars_gal1 + (rank < total_stars_gal1 % size)
+                # 각 프로세스가 처리할 별의 범위 계산
+                start_gal1 = r * part_stars_gal1 + r
+                end_gal1 = start_gal1 + part_stars_gal1 + (r < total_stars_gal1 % size)
 
-        start_gal2 = rank * part_stars_gal2 + rank
-        end_gal2 = start_gal2 + part_stars_gal2 + (rank < total_stars_gal2 % size)
-        # 해당 프로세스의 별 데이터
-        local_gal1_starpos = self.galaxy1.starpos[:, start_gal1:end_gal1]
-        local_gal1_starvel = self.galaxy1.starvel[:, start_gal1:end_gal1]
+                start_gal2 = r * part_stars_gal2 + r
+                end_gal2 = start_gal2 + part_stars_gal2 + (r < total_stars_gal2 % size)
 
-        local_gal2_starpos = self.galaxy2.starpos[:, start_gal2:end_gal2]
-        local_gal2_starvel = self.galaxy2.starvel[:, start_gal2:end_gal2]
+                # 해당 프로세스의 별 데이터
+                datas_gal1_starpos.append(self.galaxy1.starpos[:, start_gal1:end_gal1])
+                datas_gal2_starpos.append(self.galaxy2.starpos[:, start_gal2:end_gal2])
+                datas_gal1_starvel.append(self.galaxy1.starvel[:, start_gal1:end_gal1])
+                datas_gal2_starvel.append(self.galaxy2.starvel[:, start_gal2:end_gal2])
+
+        local_gal1_starpos = comm.scatter(datas_gal1_starpos, root=0)
+        local_gal2_starpos = comm.scatter(datas_gal2_starpos, root=0)
+        local_gal1_starvel = comm.scatter(datas_gal1_starvel, root=0)
+        local_gal2_starvel = comm.scatter(datas_gal2_starvel, root=0)
 
         # 시뮬레이션 루프
-        # for step, t in enumerate(tqdm.tqdm(np.arange(0, nstep), desc=f"Rank {rank} Progress", dynamic_ncols=True, position=rank)):
         for step in range(nstep) :
             st = time.time()
             # 은하 간 거리 계산
@@ -253,4 +260,3 @@ if __name__ == '__main__':
     overall_end_time = time.time()
     if MPI.COMM_WORLD.Get_rank() == 0 :
         print(f"\(^_^)/ \(^_^)/ Total execution time: {overall_end_time - overall_start_time:.3f} seconds.")
-
