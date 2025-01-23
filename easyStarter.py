@@ -86,7 +86,7 @@ class App(QtWidgets.QMainWindow, form_class) :
 
     def startSim(self) : #main 일부만 사용
         self.mainDone = False
-        os.system(f"mpiexec -np 4 python main_mpi.py --tot_nstar {100000} --nstep 1000 --save_dir {save_dir} --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} --frame_number {self.frame_number}")
+        os.system(f"mpiexec -np 4 python main_mpi.py --tot_nstar {10000} --nstep 1000 --save_dir {save_dir} --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} --frame_number {self.frame_number}")
 
         while True :
             filename = os.path.join(save_dir, f"snapshot_t{self.frame_number:04d}.npy")
@@ -115,7 +115,7 @@ class App(QtWidgets.QMainWindow, form_class) :
 
     def make_movie(self) :
         if os.path.isfile(f"outputs/snapshot_t{1000-1:04d}.npy") :
-            os.system(f"mpiexec -n 10 python make_movie.py --load_dir outputs --elev {self.elev} --azim {self.azim} --name easyStarter")
+            os.system(f"mpiexec -n 10 python make_mov_mpi.py --load_dir outputs --elev {self.elev} --azim {self.azim} --name easyStarter")
             while True :
                 filename = "easyStarter_mov.mp4"
                 if os.path.isfile(filename) :

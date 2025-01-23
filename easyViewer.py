@@ -2,39 +2,48 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import argparse
 
 # Outputs 폴더 경로 설정
 OUTPUT_DIR = "outputs"
-ANGLE_FILE = "camera_angles.txt"  # 카메라 각도를 저장할 파일
+ANGLE_FILE = "test.txt"  # 카메라 각도를 저장할 파일
+INPUT_INFO = """
+exit : 프로그램 종료
+NUM :  snapshot_tNUM.npy 열기
++NUM : 현재 프레임 NUM번 '후' 프레임 열기
+-NUM : 현재 프레임 NUM번 '전' 프레임 열기
+save : 카메라 각도 저장
+enter : 다음
+make_image : 지금 보고있는 화면 이미지로 만들기
+make_movie : 지금 보고있는 각도로 동영상 만들기
+elevNUM : elev각도를 NUM으로 변경
+azimNUM : azim각도를 NUM으로 변경
 
+입력 : """
+# npy파일들 정렬해서 반환
 def load_npy_files(output_dir):
-    """Load .npy files in the output directory."""
     npy_files = sorted([f for f in os.listdir(output_dir) if f.endswith(".npy")])
     return [os.path.join(output_dir, f) for f in npy_files]
 
-def visualize_snapshot(data, ax):
-    gal1, gal2 = data  # Extract galaxy data (each shape: 3, n)
+def visualize_snapshot(data, ax, fig):
+    gal1, gal2 = data 
     
-    # Clear the current plot
     ax.clear()
+
+    fig.patch.set_facecolor('black')
+    ax.view_init(elev = ax.elev, azim = ax.azim)
     
-    # Plot galaxy 1 (white)
     ax.scatter(gal1[0], gal1[1], gal1[2], color="white", s=0.5, label="Galaxy 1")
-    
-    # Plot galaxy 2 (gray)
     ax.scatter(gal2[0], gal2[1], gal2[2], color="gray", s=0.5, label="Galaxy 2")
     
-    # Remove grid, axes, and background elements
     ax.set_axis_off()
     ax.set_facecolor("black")  # Set background to black
 
 def update_status_bar(ax, fig):
-    """Update the status bar with the current camera angles."""
     elev, azim = ax.elev, ax.azim
-    fig.canvas.toolbar.set_message(f"Camera Angles - Elev: {elev:.2f}, Azim: {azim:.2f}")
+    fig.canvas.toolbar.set_message(f"Elev: {elev:.2f}, Azim: {azim:.2f}")
 
 def save_camera_angle(ax, angle_file):
-    """Save the current camera angles to a file."""
     elev = ax.elev
     azim = ax.azim
     with open(angle_file, "a") as f:
@@ -42,24 +51,23 @@ def save_camera_angle(ax, angle_file):
     print(f"카메라 각도 저장됨 -> elev: {elev}, azim: {azim}")
 
 def on_mouse_event(event, fig, ax):
-    """Handle mouse motion and update the status bar."""
     update_status_bar(ax, fig)
 
 def main():
-    # Load all .npy files
+
+    #npy파일들 리스트
     npy_files = load_npy_files(OUTPUT_DIR)
     
     if not npy_files:
         print("파일 경로 없음")
         return
 
-    # Create a matplotlib 3D plot
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d', facecolor="black")  # Set figure background to black
-    
-    print("엔터는 다음 스냅샷, 숫자는 숫자번 스냅샷, save는 현재 카메라 각도 저장.")
-    snapshot_idx = 0  # Current snapshot index
 
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d', facecolor="black")
+    ax.elev = 0
+    ax.azim = 0
+    snapshot_idx = 0  # 초기값
     # Set the initial status bar
     update_status_bar(ax, fig)
     
@@ -68,32 +76,42 @@ def main():
     fig.canvas.mpl_connect("button_release_event", lambda event: on_mouse_event(event, fig, ax))
     
     while True:
-        # Ensure the index is valid
+        # 에러방지
         if snapshot_idx < 0 or snapshot_idx >= len(npy_files):
-            print(f"1 이랑 {len(npy_files)} 사이 입력.")
+            print(f"인덱스 에러, 최대 크기 : {len(npy_files)}")
             snapshot_idx = 0
 
-        # Load the current snapshot
+        #스냅샷.npy 불러오기
         data = np.load(npy_files[snapshot_idx])
 
-        # Visualize the snapshot
-        visualize_snapshot(data, ax)
+        #그리기
+        visualize_snapshot(data, ax, fig)
         plt.draw()
-        plt.pause(0.1)  # Update the plot
+        plt.pause(0.1)
         
         print(f"스냅샷 {snapshot_idx + 1}/{len(npy_files)} 보는 중")
-        print(f"현재 카메라 각도 -> elev: {ax.elev}, azim: {ax.azim}")  # 현재 각도 출력
         
-        # Wait for user input
-        user_input = input("exit : 프로그램 종료\nNUM :  snapshot_tNUM.npy 오픈\nsave : 카메라 각도 저장\nenter : 다음\n입력하세요. : ").strip().lower()
+        user_input = input(INPUT_INFO).strip().lower()
         print()
         
         if user_input == "exit":
             break
         elif user_input == "save":
             save_camera_angle(ax, ANGLE_FILE)
+        elif user_input == "make_movie" :
+            os.system(f"mpiexec -n 10 python make_movie.py --elev {ax.elev} --azim {ax.azim} --name ezViewer")
+        elif user_input == "make_image" :
+            os.system(f"python make_image.py --elev {ax.elev} --azim {ax.azim} --save_dir ezViewerImages --resol 1")
         elif user_input.isdigit():
-            snapshot_idx = int(user_input) - 1  
+            snapshot_idx = int(user_input) - 1
+        elif len(user_input) and user_input[0]=="+":
+            snapshot_idx+=int(user_input[1:])
+        elif len(user_input) and user_input[0]=="-":
+            snapshot_idx-=int(user_input[1:])
+        elif len(user_input) and user_input[0:4]=="elev":
+            ax.elev = int(user_input[4:])
+        elif len(user_input) and user_input[0:4]=="azim":
+            ax.azim = int(user_input[4:])
         else:
             snapshot_idx += 1  
 
@@ -101,4 +119,6 @@ def main():
     plt.close(fig)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--save_dir", type=str, default="outputs", help="Save directory")
     main()
