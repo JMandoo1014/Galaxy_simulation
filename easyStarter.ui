@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>easyStarter</class>
- <widget class="QMainWindow" name="easyStarter">
+ <class>easyStartter</class>
+ <widget class="QMainWindow" name="easyStartter">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>644</width>
-    <height>289</height>
+    <height>299</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,193 +15,13 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_title">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Galaxy Simulation Easy Starter</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QGroupBox" name="parameters">
       <property name="title">
        <string>parameters</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <layout class="QVBoxLayout" name="angle_box">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <item>
-            <widget class="QLabel" name="elev_label">
-             <property name="text">
-              <string>elev : </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="elev_slider">
-             <property name="maximum">
-              <number>3600</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QLabel" name="azim_label">
-             <property name="text">
-              <string>azim : </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="azim_slider">
-             <property name="maximum">
-              <number>3600</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
        <item row="4" column="0" colspan="2">
-        <layout class="QHBoxLayout" name="frame_number_box">
-         <item>
-          <widget class="QLabel" name="frame_number_label">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Frame :</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="frame_number_slider">
-           <property name="maximum">
-            <number>1000</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0" colspan="2">
-        <layout class="QHBoxLayout" name="G2">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-         <item>
-          <widget class="QLabel" name="theta2_label">
-           <property name="text">
-            <string>theta2 : </string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="theta2_slider">
-           <property name="maximum">
-            <number>1800</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="phi2_label">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>phi2 : </string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="phi2_slider">
-           <property name="maximum">
-            <number>3600</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <layout class="QHBoxLayout" name="Others">
-         <item>
-          <widget class="QLabel" name="mratio_label">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Mass Ratio :</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="mratio_slider">
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="peri_label">
-           <property name="text">
-            <string>Peri :</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="peri_slider">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0" colspan="2">
         <layout class="QHBoxLayout" name="G1">
          <property name="topMargin">
           <number>0</number>
@@ -254,10 +74,185 @@
          </item>
         </layout>
        </item>
+       <item row="5" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="G2">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <item>
+          <widget class="QLabel" name="theta2_label">
+           <property name="text">
+            <string>theta2 : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="theta2_slider">
+           <property name="maximum">
+            <number>1800</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="phi2_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>phi2 : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="phi2_slider">
+           <property name="maximum">
+            <number>3600</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="angles">
+         <item>
+          <layout class="QVBoxLayout" name="angle_box">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="elev_label">
+               <property name="text">
+                <string>elev : </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="elev_slider">
+               <property name="maximum">
+                <number>3600</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLabel" name="azim_label">
+               <property name="text">
+                <string>azim : </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="azim_slider">
+               <property name="maximum">
+                <number>3600</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="camera_btn">
+           <property name="text">
+            <string>카메라 적용</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="Others">
+         <item>
+          <widget class="QLabel" name="mratio_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Mass Ratio :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="mratio_slider">
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="peri_label">
+           <property name="text">
+            <string>Peri :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="peri_slider">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="frame_number_box">
+         <item>
+          <widget class="QLabel" name="frame_number_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Frame :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="frame_number_slider">
+           <property name="maximum">
+            <number>1000</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
     </item>
-    <item row="4" column="0">
+    <item row="6" column="0">
      <layout class="QHBoxLayout" name="img_horizon">
       <item>
        <widget class="QLabel" name="img_label">
@@ -277,35 +272,66 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="0">
-     <layout class="QHBoxLayout" name="button_horizon_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_title">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Galaxy Simulation Easy Starter</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="camera_btn">
+       <widget class="QPushButton" name="changeSettings_btn">
         <property name="text">
-         <string>카메라 적용</string>
+         <string>세팅값 변경하기</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="main_btn">
-        <property name="text">
-         <string>main.py 실행</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPushButton" name="main_mpi_btn">
+          <property name="text">
+           <string>main.py 실행</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="load_frame_image_btn">
+          <property name="text">
+           <string>프레임 적용</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="make_movie_btn">
+          <property name="text">
+           <string>현재 세팅 값으로 동영상 만들기</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="start_btn">
-        <property name="text">
-         <string>세팅값 보기</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="movie_btn">
-        <property name="text">
-         <string>동영상 만들기</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QPushButton" name="saveSettings_btn">
+          <property name="text">
+           <string>세팅값 저장하기</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
