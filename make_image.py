@@ -8,7 +8,6 @@ import time
 
 # python make_image.py --load_dir outputs --prefix snapshot --frame 1 --save_dir Images --resol 1
 class Img:
-
     def __init__(self, args):
         self.args = args
 
@@ -31,7 +30,11 @@ class Img:
 
         fig = plt.figure(figsize=(16 * resolution, 9 * resolution))
         ax  = plt.axes(projection='3d')
-    
+
+        ax.set_xlim(-15, 15)
+        ax.set_ylim(-15, 15)
+        ax.set_zlim(-15, 15)
+
         ax.view_init(elev=self.args.elev, azim=self.args.azim) #카메라 돌리기
         ax.set_facecolor('black')
         fig.patch.set_facecolor('black')
@@ -60,7 +63,7 @@ if __name__ == '__main__':
     parser.add_argument("--prefix", type=str, default="snapshot", help="Prefix of an output file")
     parser.add_argument("--frame", type=int, default=700, help="Frame number")
     parser.add_argument("--save_dir", type=str, default="Images", help="Save directory")
-    parser.add_argument("--resol", type=int, default=1, help="Image resolution")
+    parser.add_argument("--resol", type=int, default=2, help="Image resolution")
     parser.add_argument("--elev", type=float, default=60, help="elev angle")
     parser.add_argument("--azim", type=float, default=0, help="azim angle")
 

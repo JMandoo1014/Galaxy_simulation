@@ -9,10 +9,10 @@ import os
 from mpi4py import MPI
 
 In_theta1 = 0
-In_phi1 = 90
+In_phi1 =90
 In_theta2 = 0
 In_phi2 = 0
-In_tot_nstar = 10000
+In_tot_nstar = 100000
 In_mratio = 5
 In_peri = 5
 In_nstep = 1000
