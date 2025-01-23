@@ -58,10 +58,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Draw Image")
     parser.add_argument("--load_dir", type=str, default="outputs", help="Load directory")
     parser.add_argument("--prefix", type=str, default="snapshot", help="Prefix of an output file")
-    parser.add_argument("--frame", type=int, default=1, help="Frame number")
+    parser.add_argument("--frame", type=int, default=700, help="Frame number")
     parser.add_argument("--save_dir", type=str, default="Images", help="Save directory")
     parser.add_argument("--resol", type=int, default=1, help="Image resolution")
-    parser.add_argument("--elev", type=float, default=0, help="elev angle")
+    parser.add_argument("--elev", type=float, default=60, help="elev angle")
     parser.add_argument("--azim", type=float, default=0, help="azim angle")
 
     start_time = time.time()

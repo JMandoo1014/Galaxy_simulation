@@ -70,7 +70,16 @@ class App(QtWidgets.QMainWindow, form_class) :
         if os.path.isfile(lastfilename) :
             os.remove(lastfilename)
             print("sak jae")
-        os.system(f"mpiexec -np 4 python main_mpi.py --nstep {1000} --save_dir outputs --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} ")
+        print(self.elev)
+        print(self.azim)
+        print(self.theta1)
+        print(self.phi1)
+        print(self.theta2)
+        print(self.phi2)
+        print(self.mratio)
+        print(self.peri)
+        print(self.frame_number)
+        os.system(f"mpiexec -np 4 python main_mpi.py --nstep 1000 --save_dir outputs --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri}")
 
         while True :
             filename = os.path.join("outputs", f"snapshot_t{1000-1:04d}.npy")
@@ -78,7 +87,16 @@ class App(QtWidgets.QMainWindow, form_class) :
                 break
 
     def startSim(self) :
-        os.system(f"mpiexec -np 4 python main_mpi.py --tot_nstar {100000} --nstep {1000} --save_dir {save_dir} --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} --frame_number {self.frame_number}")
+        print(self.elev)
+        print(self.azim)
+        print(self.theta1)
+        print(self.phi1)
+        print(self.theta2)
+        print(self.phi2)
+        print(self.mratio)
+        print(self.peri)
+        print(self.frame_number)
+        os.system(f"mpiexec -np 4 python main_mpi.py --tot_nstar {100000} --nstep 1000 --save_dir {save_dir} --theta1 {self.theta1} --phi1 {self.phi1} --theta2 {self.theta2} --phi2 {self.phi2} --mratio {self.mratio} --peri {self.peri} --frame_number {self.frame_number}")
 
         while True :
             filename = os.path.join(save_dir, f"snapshot_t{self.frame_number:04d}.npy")
@@ -100,6 +118,7 @@ class App(QtWidgets.QMainWindow, form_class) :
 
         pixmap = QtGui.QPixmap(os.path.join(save_dir, f"snapshot_t{self.frame_number:04d}.png"))
         self.img_label.setPixmap(pixmap)
+
     def startMovie(self) :
         self.startMain()
         if os.path.isfile(f"outputs/snapshot_t{999:04d}.npy") :
@@ -124,7 +143,7 @@ class App(QtWidgets.QMainWindow, form_class) :
         self.phi1 = self.phi1_slider.value() / 10 
         self.phi1_label.setText(f"phi1 : {self.phi1:.01f}")
     def update_theta2(self):
-        self.theta2 = self.theta2_slider.value() / 10  
+        self.theta2 = self.theta2_slider.value() / 10 
         self.theta2_label.setText(f"theta2 : {self.theta2:.01f}")
     def update_phi2(self):
         self.phi2 = self.phi2_slider.value() / 10  
